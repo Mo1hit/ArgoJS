@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-js-app
+  namespace: argocdjs
+spec: #Very specific to this application kind
+  project: default #Every application belongs to a single project
+
+  source: # two things to setup, source and destination
+    repoURL: https://github.com/Mo1hit/ArgoJS.git #GitOps repository
+    targetRevision: HEAD #HEAD always points to the last commit in the repo
+    path: config # name of the directory of the project(To track specific path)
+  destination: 
+    server: https://kubernetes.default.svc #internal service name of K8s api server to check >kubectl get svc
+    namespace: jsapp #since this namespace doesn't already exist, we can configure that (syncPolicy), so that it always has this namespace
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated: #Auto fetching, override any manual changes to the cluster/ns
+      selfHeal: true
+      prune: true #Makes changes in the cluster as it happens(Always in an interval of 3 minutes), If we don't want this delay we can configure a Git webhook, to notify of any changes to ArgoCD
