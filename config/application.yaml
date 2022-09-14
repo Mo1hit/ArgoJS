@@ -9,7 +9,7 @@ spec: #Very specific to this application kind
   source: # two things to setup, source and destination
     repoURL: https://github.com/Mo1hit/ArgoJS.git #GitOps repository
     targetRevision: HEAD #HEAD always points to the last commit in the repo
-    path: config # name of the directory of the project(To track specific path)
+    path: kube # name of the directory of the project(To track specific path)
   destination: 
     server: https://kubernetes.default.svc #internal service name of K8s api server to check >kubectl get svc
     namespace: jsapp #since this namespace doesn't already exist, we can configure that (syncPolicy), so that it always has this namespace
