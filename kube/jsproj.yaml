@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jsproject
+spec:
+  selector:
+    app: jsproject
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jsproject
+  labels:
+    app: jsproject
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: jsproject
+  template:
+    metadata:
+      labels:
+        app: jsproject
+    spec:
+      containers:
+        - name: jsproject
+          image: mo2000hit/jsproject:1.0.0
+          ports:
+            - containerPort: 3000
+          # env:
+          #   - name: MONGO_URL
+          #     value: mongodb://mongo:27017/dev
+          imagePullPolicy: Always
