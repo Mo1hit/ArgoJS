@@ -31,7 +31,4 @@ spec:
           image: mo2000hit/jsproject:1.0.0
           ports:
             - containerPort: 3000
-          # env:
-          #   - name: MONGO_URL
-          #     value: mongodb://mongo:27017/dev
           imagePullPolicy: Always
